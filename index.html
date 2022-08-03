@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <title>Idea Generation Assistant</title>
+   <style type="text/css">
+      #autoresizing {
+         display: block;
+         overflow: hidden;
+         resize: none;
+      }
+   </style>
+</head>
+<body>
+   <form>
+      <input type="number" name="hours" id="hours" min="00" max="24">
+      Hours &nbsp;
+      <select name="minutes" id="minutes">
+         <option value="00">00</option>
+         <option value="15">15</option>
+         <option value="30">30</option>
+         <option value="45">45</option>
+      </select>
+      Minutes
+      <br>
+      <button type="button" onclick="checkTime()" id="time_submit_button">Submit Time</button>
+   </form>
+   <div id="total_time">Total Time: </div>
+   <div id="word_time">Next Word in:</div>
+   <div id="random_word">Your Word:</div>
+   Your Story
+   <textarea id="autoresizing" placeholder="Start your story here...." disabled></textarea>
+      
+   <script>
+
+      document.getElementById("autoresizing").addEventListener("input", function(){
+         this.style.height = 'auto';
+         this.style.height = this.scrollHeight+'px';
+      });
+
+      var random_word_div = document.getElementById("random_word");
+      var random_words = ['arrow','black','canary', 'siren', 'flash', 'red'];
+      function startTimer(duration, display_element, reset_count=0) {
+         random_word_index = 0;
+         random_word_div.innerHTML="Your Word: <b>"+random_words[random_word_index]+ "</b><br> random words left :"+ (reset_count-1);
+         var timer = duration;
+         var countDown = setInterval(function () {
+         var seconds = parseInt(timer % 60, 10);
+         var minutes = parseInt((timer / 60) % 60, 10);
+         var hours = parseInt((timer / 60) / 60, 10);
+
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+            if (display_element.id == "total_time"){
+               display_element.innerHTML = hours != 0 ? "Total Time: " + hours+"hrs : " : 'Total Time: ';
+               display_element.innerHTML += minutes == 0 ? seconds+"s" : minutes + "m : " + seconds+"s";
+            }
+            else{
+               display_element.innerHTML = hours != 0 ? "Next Word in: " + hours+"hrs : " : 'Next Word in: ';
+               display_element.innerHTML += minutes == 0 ? seconds+"s" : minutes + "m : " + seconds+"s";
+            }
+            
+            if (--timer < 0) {
+               --reset_count;
+               if (reset_count > 0 ){
+                  random_word_index++;
+                  random_word_div.innerHTML="Your Word: <b>"+random_words[random_word_index]+ "</b><br> random words left :"+ (reset_count-1);
+                  timer = duration;
+               }
+               else{
+                  clearInterval(countDown);
+               }
+            }
+         }, 1000);
+      }
+
+
+      var minute = 60;
+      var totalTime = document.querySelector('#total_time');
+      var wordTime =  document.querySelector('#word_time');
+      var storyText = document.getElementById("autoresizing");
+      var timeButton = document.getElementById("time_submit_button");
+      function checkTime() {
+         hours = document.getElementById("hours");
+         minutes = document.getElementById("minutes");
+         activate_time = false;
+         if (hours.value < 1) {
+            if (minutes.value < 45) {
+               alert("Aleast Select 45 minutes");
+            }
+            else{
+            activate_time = true;
+            }
+         }
+         else{
+            activate_time = true;
+         }
+         if (activate_time) {
+            hours.disabled=true;
+            minutes.disabled=true;
+            storyText.disabled=false;
+            timeButton.remove();
+            total_minutes = (hours.value*60)+parseInt(minutes.value);
+            total_random_words = (total_minutes-30) / 15;
+            startTimer(minute *total_minutes, totalTime, reset_count=0);
+            startTimer(minute *15, wordTime, reset_count=total_random_words);
+         }
+
+      }
+   </script>
+</body>
+</html>
