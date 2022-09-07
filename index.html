@@ -10,28 +10,89 @@
          overflow: hidden;
          resize: none;
       }
+
+      body{
+         background-image: url("images.jpeg");
+         color: aliceblue;
+         font-weight: 700;
+         
+      }
+
+      div.container{
+         margin-left: 42%;
+         font-size: 32px;
+      }
+      form{
+        margin-top: 6%;
+      }
+
+      #time_submit_button{
+         background-color: black;
+         color: white;
+         height: 40px;
+         width: 100px;
+         margin-left: 10%;
+         margin-top: 4%;
+         margin-bottom: 5%;
+         border-color: #ffffff;
+         border-radius: 10px;
+         
+      }
+      h1.head{
+         color: white;
+         text-align: center;
+         margin-top: 5%;
+         font-size: 60px;
+      }
+
+      div.line{
+         width: 700px;
+         color: white;
+         height: 3px;
+      }
+
+      .con-two{
+         margin-top: 5%;
+      }
+
+      .con-three{
+         margin-top: 5%;
+      }
    </style>
 </head>
 <body>
-   <form>
-      <input type="number" name="hours" id="hours" min="00" max="24">
-      Hours &nbsp;
-      <select name="minutes" id="minutes">
-         <option value="00">00</option>
-         <option value="15">15</option>
-         <option value="30">30</option>
-         <option value="45">45</option>
-      </select>
-      Minutes
-      <br>
-      <button type="button" onclick="checkTime()" id="time_submit_button">Submit Time</button>
-   </form>
-   <div id="total_time">Total Time: </div>
-   <div id="word_time">Next Word in:</div>
-   <div id="random_word">Your Word:</div>
-   Your Story
-   <textarea id="autoresizing" placeholder="Start your story here...." disabled></textarea>
+   <h1 class="head">IDEA GENERATION ASSISTANT</h1>
+   <div class="line"></div>
+   <div class="container">
+      <form>
+         <input type="number" name="hours" id="hours" min="00" max="24">
+         Hours &nbsp;
+         <select name="minutes" id="minutes">
+            <option value="00">00</option>
+            <option value="15">15</option>
+            <option value="30">30</option>
+            <option value="45">45</option>
+         </select>
+         Minutes
+         <br>
+         <button type="button" onclick="checkTime()" id="time_submit_button">Submit Time</button>
+      </form>
+      <div class="con-two">
+         <div id="total_time">Total Time: </div>
+         <div id="word_time">Next Word in:</div>
+         <div id="random_word">Your Word:</div>
+      </div>
       
+      <div class="con-three">
+         Your Story
+      <textarea id="autoresizing" placeholder="Start your story here...." disabled></textarea>
+      </div>
+   </div>
+     
+
+
+
+
    <script>
 
       document.getElementById("autoresizing").addEventListener("input", function(){
